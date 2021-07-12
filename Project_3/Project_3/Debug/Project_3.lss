@@ -1,0 +1,923 @@
+
+Project_3.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000452  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         0000017c  00800060  00000452  000004c6  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .comment      00000030  00000000  00000000  00000642  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000674  2**2
+                  CONTENTS, READONLY
+  4 .debug_aranges 00000098  00000000  00000000  000006b0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   00000a08  00000000  00000000  00000748  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 000002d9  00000000  00000000  00001150  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   00000345  00000000  00000000  00001429  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  000001c0  00000000  00000000  00001770  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    000002b3  00000000  00000000  00001930  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    00000716  00000000  00000000  00001be3  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 000000a0  00000000  00000000  000022f9  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+   8:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+   c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  10:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  14:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  18:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  1c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  20:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  24:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  28:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  2c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  30:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  34:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  38:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  3c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  40:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  44:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  48:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  4c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  50:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d8 e0       	ldi	r29, 0x08	; 8
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+
+00000060 <__do_copy_data>:
+  60:	11 e0       	ldi	r17, 0x01	; 1
+  62:	a0 e6       	ldi	r26, 0x60	; 96
+  64:	b0 e0       	ldi	r27, 0x00	; 0
+  66:	e2 e5       	ldi	r30, 0x52	; 82
+  68:	f4 e0       	ldi	r31, 0x04	; 4
+  6a:	02 c0       	rjmp	.+4      	; 0x70 <__do_copy_data+0x10>
+  6c:	05 90       	lpm	r0, Z+
+  6e:	0d 92       	st	X+, r0
+  70:	ac 3d       	cpi	r26, 0xDC	; 220
+  72:	b1 07       	cpc	r27, r17
+  74:	d9 f7       	brne	.-10     	; 0x6c <__do_copy_data+0xc>
+  76:	0e 94 7e 01 	call	0x2fc	; 0x2fc <main>
+  7a:	0c 94 27 02 	jmp	0x44e	; 0x44e <_exit>
+
+0000007e <__bad_interrupt>:
+  7e:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+00000082 <output>:
+}
+
+static void
+output(unsigned char d, unsigned char rs)
+{
+	if (rs) SET_BIT(PORT, RS_PIN); else CLR_BIT(PORT, RS_PIN);
+  82:	66 23       	and	r22, r22
+  84:	11 f0       	breq	.+4      	; 0x8a <output+0x8>
+  86:	c0 9a       	sbi	0x18, 0	; 24
+  88:	01 c0       	rjmp	.+2      	; 0x8c <output+0xa>
+  8a:	c0 98       	cbi	0x18, 0	; 24
+	CLR_BIT(PORT, RW_PIN);
+  8c:	c1 98       	cbi	0x18, 1	; 24
+#define EN_PIN  2
+
+static inline void
+set_data(unsigned char x)
+{
+	PORTD = x;
+  8e:	82 bb       	out	0x12, r24	; 18
+	DDRD = 0xff;
+  90:	8f ef       	ldi	r24, 0xFF	; 255
+  92:	81 bb       	out	0x11, r24	; 17
+output(unsigned char d, unsigned char rs)
+{
+	if (rs) SET_BIT(PORT, RS_PIN); else CLR_BIT(PORT, RS_PIN);
+	CLR_BIT(PORT, RW_PIN);
+	set_data(d);
+	SET_BIT(PORT, EN_PIN);
+  94:	c2 9a       	sbi	0x18, 2	; 24
+}
+
+static inline void
+sleep_700ns(void)
+{
+	NOP();
+  96:	00 00       	nop
+	NOP();
+  98:	00 00       	nop
+	NOP();
+  9a:	00 00       	nop
+	if (rs) SET_BIT(PORT, RS_PIN); else CLR_BIT(PORT, RS_PIN);
+	CLR_BIT(PORT, RW_PIN);
+	set_data(d);
+	SET_BIT(PORT, EN_PIN);
+	sleep_700ns();
+	CLR_BIT(PORT, EN_PIN);
+  9c:	c2 98       	cbi	0x18, 2	; 24
+  9e:	08 95       	ret
+
+000000a0 <write>:
+
+static unsigned char
+input(unsigned char rs)
+{
+	unsigned char d;
+	if (rs) SET_BIT(PORT, RS_PIN); else CLR_BIT(PORT, RS_PIN);
+  a0:	c0 98       	cbi	0x18, 0	; 24
+	SET_BIT(PORT, RW_PIN);
+  a2:	c1 9a       	sbi	0x18, 1	; 24
+}
+
+static inline unsigned char
+get_data(void)
+{
+	DDRD = 0x00;
+  a4:	11 ba       	out	0x11, r1	; 17
+	return PIND;
+  a6:	90 b3       	in	r25, 0x10	; 16
+{
+	unsigned char d;
+	if (rs) SET_BIT(PORT, RS_PIN); else CLR_BIT(PORT, RS_PIN);
+	SET_BIT(PORT, RW_PIN);
+	get_data();
+	SET_BIT(PORT, EN_PIN);
+  a8:	c2 9a       	sbi	0x18, 2	; 24
+}
+
+static inline void
+sleep_700ns(void)
+{
+	NOP();
+  aa:	00 00       	nop
+	NOP();
+  ac:	00 00       	nop
+	NOP();
+  ae:	00 00       	nop
+}
+
+static inline unsigned char
+get_data(void)
+{
+	DDRD = 0x00;
+  b0:	11 ba       	out	0x11, r1	; 17
+	return PIND;
+  b2:	90 b3       	in	r25, 0x10	; 16
+	SET_BIT(PORT, RW_PIN);
+	get_data();
+	SET_BIT(PORT, EN_PIN);
+	sleep_700ns();
+	d = get_data();
+	CLR_BIT(PORT, EN_PIN);
+  b4:	c2 98       	cbi	0x18, 2	; 24
+}
+
+static void
+write(unsigned char c, unsigned char rs)
+{
+	while (input(0) & 0x80);
+  b6:	99 23       	and	r25, r25
+  b8:	9c f3       	brlt	.-26     	; 0xa0 <write>
+	output(c, rs);
+  ba:	0e 94 41 00 	call	0x82	; 0x82 <output>
+  be:	08 95       	ret
+
+000000c0 <wait_avr>:
+	//WDTCR = 15;
+}
+
+void
+wait_avr(unsigned short msec)
+{
+  c0:	9c 01       	movw	r18, r24
+	TCCR0 = 2;
+  c2:	82 e0       	ldi	r24, 0x02	; 2
+  c4:	83 bf       	out	0x33, r24	; 51
+	while (msec--) {
+		TCNT0 = (unsigned char)(256 - (XTAL_FRQ / 8) * 0.00001);  
+  c6:	86 ef       	ldi	r24, 0xF6	; 246
+
+void
+wait_avr(unsigned short msec)
+{
+	TCCR0 = 2;
+	while (msec--) {
+  c8:	08 c0       	rjmp	.+16     	; 0xda <wait_avr+0x1a>
+		TCNT0 = (unsigned char)(256 - (XTAL_FRQ / 8) * 0.00001);  
+  ca:	82 bf       	out	0x32, r24	; 50
+		SET_BIT(TIFR, TOV0);
+  cc:	98 b7       	in	r25, 0x38	; 56
+  ce:	91 60       	ori	r25, 0x01	; 1
+  d0:	98 bf       	out	0x38, r25	; 56
+		WDR();
+  d2:	a8 95       	wdr
+		while (!GET_BIT(TIFR, TOV0));
+  d4:	08 b6       	in	r0, 0x38	; 56
+  d6:	00 fe       	sbrs	r0, 0
+  d8:	fd cf       	rjmp	.-6      	; 0xd4 <wait_avr+0x14>
+
+void
+wait_avr(unsigned short msec)
+{
+	TCCR0 = 2;
+	while (msec--) {
+  da:	21 50       	subi	r18, 0x01	; 1
+  dc:	31 09       	sbc	r19, r1
+  de:	a8 f7       	brcc	.-22     	; 0xca <wait_avr+0xa>
+		TCNT0 = (unsigned char)(256 - (XTAL_FRQ / 8) * 0.00001);  
+		SET_BIT(TIFR, TOV0);
+		WDR();
+		while (!GET_BIT(TIFR, TOV0));
+	}
+	TCCR0 = 0;
+  e0:	13 be       	out	0x33, r1	; 51
+  e2:	08 95       	ret
+
+000000e4 <play_note>:
+}
+
+
+void 
+play_note(unsigned short freq, unsigned short duration) {
+  e4:	ef 92       	push	r14
+  e6:	ff 92       	push	r15
+  e8:	0f 93       	push	r16
+  ea:	1f 93       	push	r17
+  ec:	cf 93       	push	r28
+  ee:	df 93       	push	r29
+	
+	SET_BIT(DDRB, 3);
+  f0:	bb 9a       	sbi	0x17, 3	; 23
+	int i;
+	for(i = 0; i < duration; i++ )
+  f2:	61 15       	cp	r22, r1
+  f4:	71 05       	cpc	r23, r1
+  f6:	81 f0       	breq	.+32     	; 0x118 <play_note+0x34>
+  f8:	8c 01       	movw	r16, r24
+  fa:	7b 01       	movw	r14, r22
+  fc:	c0 e0       	ldi	r28, 0x00	; 0
+  fe:	d0 e0       	ldi	r29, 0x00	; 0
+	{
+		SET_BIT(PORTB,3);
+ 100:	c3 9a       	sbi	0x18, 3	; 24
+		wait_avr(freq);
+ 102:	c8 01       	movw	r24, r16
+ 104:	0e 94 60 00 	call	0xc0	; 0xc0 <wait_avr>
+		CLR_BIT(PORTB,3);
+ 108:	c3 98       	cbi	0x18, 3	; 24
+	    wait_avr(freq);		
+ 10a:	c8 01       	movw	r24, r16
+ 10c:	0e 94 60 00 	call	0xc0	; 0xc0 <wait_avr>
+void 
+play_note(unsigned short freq, unsigned short duration) {
+	
+	SET_BIT(DDRB, 3);
+	int i;
+	for(i = 0; i < duration; i++ )
+ 110:	21 96       	adiw	r28, 0x01	; 1
+ 112:	ce 15       	cp	r28, r14
+ 114:	df 05       	cpc	r29, r15
+ 116:	a1 f7       	brne	.-24     	; 0x100 <play_note+0x1c>
+		wait_avr(freq);
+		CLR_BIT(PORTB,3);
+	    wait_avr(freq);		
+		
+	}
+}
+ 118:	df 91       	pop	r29
+ 11a:	cf 91       	pop	r28
+ 11c:	1f 91       	pop	r17
+ 11e:	0f 91       	pop	r16
+ 120:	ff 90       	pop	r15
+ 122:	ef 90       	pop	r14
+ 124:	08 95       	ret
+
+00000126 <play_music>:
+
+void
+play_music(Note song[], int length)
+{
+ 126:	ef 92       	push	r14
+ 128:	ff 92       	push	r15
+ 12a:	0f 93       	push	r16
+ 12c:	1f 93       	push	r17
+ 12e:	cf 93       	push	r28
+ 130:	df 93       	push	r29
+	int i;
+	for (i = 0; i < length; i++)
+ 132:	16 16       	cp	r1, r22
+ 134:	17 06       	cpc	r1, r23
+ 136:	ac f4       	brge	.+42     	; 0x162 <play_music+0x3c>
+ 138:	7b 01       	movw	r14, r22
+ 13a:	c8 2f       	mov	r28, r24
+ 13c:	d9 2f       	mov	r29, r25
+ 13e:	00 e0       	ldi	r16, 0x00	; 0
+ 140:	10 e0       	ldi	r17, 0x00	; 0
+	{
+		play_note(song[i].freq, song[i].duration);
+ 142:	6a 81       	ldd	r22, Y+2	; 0x02
+ 144:	7b 81       	ldd	r23, Y+3	; 0x03
+ 146:	88 81       	ld	r24, Y
+ 148:	99 81       	ldd	r25, Y+1	; 0x01
+ 14a:	0e 94 72 00 	call	0xe4	; 0xe4 <play_note>
+		wait_avr(5000);
+ 14e:	88 e8       	ldi	r24, 0x88	; 136
+ 150:	93 e1       	ldi	r25, 0x13	; 19
+ 152:	0e 94 60 00 	call	0xc0	; 0xc0 <wait_avr>
+
+void
+play_music(Note song[], int length)
+{
+	int i;
+	for (i = 0; i < length; i++)
+ 156:	0f 5f       	subi	r16, 0xFF	; 255
+ 158:	1f 4f       	sbci	r17, 0xFF	; 255
+ 15a:	24 96       	adiw	r28, 0x04	; 4
+ 15c:	0e 15       	cp	r16, r14
+ 15e:	1f 05       	cpc	r17, r15
+ 160:	81 f7       	brne	.-32     	; 0x142 <play_music+0x1c>
+	{
+		play_note(song[i].freq, song[i].duration);
+		wait_avr(5000);
+	}
+	
+}
+ 162:	df 91       	pop	r29
+ 164:	cf 91       	pop	r28
+ 166:	1f 91       	pop	r17
+ 168:	0f 91       	pop	r16
+ 16a:	ff 90       	pop	r15
+ 16c:	ef 90       	pop	r14
+ 16e:	08 95       	ret
+
+00000170 <ini_lcd>:
+}
+
+void
+ini_lcd(void)
+{
+	SET_BIT(DDR, RS_PIN);
+ 170:	b8 9a       	sbi	0x17, 0	; 23
+	SET_BIT(DDR, RW_PIN);
+ 172:	b9 9a       	sbi	0x17, 1	; 23
+	SET_BIT(DDR, EN_PIN);
+ 174:	ba 9a       	sbi	0x17, 2	; 23
+	wait_avr(16);
+ 176:	80 e1       	ldi	r24, 0x10	; 16
+ 178:	90 e0       	ldi	r25, 0x00	; 0
+ 17a:	0e 94 60 00 	call	0xc0	; 0xc0 <wait_avr>
+	output(0x30, 0);
+ 17e:	60 e0       	ldi	r22, 0x00	; 0
+ 180:	80 e3       	ldi	r24, 0x30	; 48
+ 182:	0e 94 41 00 	call	0x82	; 0x82 <output>
+	wait_avr(5);
+ 186:	85 e0       	ldi	r24, 0x05	; 5
+ 188:	90 e0       	ldi	r25, 0x00	; 0
+ 18a:	0e 94 60 00 	call	0xc0	; 0xc0 <wait_avr>
+	output(0x30, 0);
+ 18e:	60 e0       	ldi	r22, 0x00	; 0
+ 190:	80 e3       	ldi	r24, 0x30	; 48
+ 192:	0e 94 41 00 	call	0x82	; 0x82 <output>
+	wait_avr(1);
+ 196:	81 e0       	ldi	r24, 0x01	; 1
+ 198:	90 e0       	ldi	r25, 0x00	; 0
+ 19a:	0e 94 60 00 	call	0xc0	; 0xc0 <wait_avr>
+	write(0x3c, 0);
+ 19e:	60 e0       	ldi	r22, 0x00	; 0
+ 1a0:	8c e3       	ldi	r24, 0x3C	; 60
+ 1a2:	0e 94 50 00 	call	0xa0	; 0xa0 <write>
+	write(0x0c, 0);
+ 1a6:	60 e0       	ldi	r22, 0x00	; 0
+ 1a8:	8c e0       	ldi	r24, 0x0C	; 12
+ 1aa:	0e 94 50 00 	call	0xa0	; 0xa0 <write>
+	write(0x06, 0);
+ 1ae:	60 e0       	ldi	r22, 0x00	; 0
+ 1b0:	86 e0       	ldi	r24, 0x06	; 6
+ 1b2:	0e 94 50 00 	call	0xa0	; 0xa0 <write>
+	write(0x01, 0);
+ 1b6:	60 e0       	ldi	r22, 0x00	; 0
+ 1b8:	81 e0       	ldi	r24, 0x01	; 1
+ 1ba:	0e 94 50 00 	call	0xa0	; 0xa0 <write>
+ 1be:	08 95       	ret
+
+000001c0 <clr_lcd>:
+}
+
+void
+clr_lcd(void)
+{
+	write(0x01, 0);
+ 1c0:	60 e0       	ldi	r22, 0x00	; 0
+ 1c2:	81 e0       	ldi	r24, 0x01	; 1
+ 1c4:	0e 94 50 00 	call	0xa0	; 0xa0 <write>
+ 1c8:	08 95       	ret
+
+000001ca <pos_lcd>:
+}
+
+void
+pos_lcd(unsigned char r, unsigned char c)
+{
+ 1ca:	cf 93       	push	r28
+	unsigned char n = r * 40 + c;
+ 1cc:	c6 2f       	mov	r28, r22
+ 1ce:	98 e2       	ldi	r25, 0x28	; 40
+ 1d0:	89 9f       	mul	r24, r25
+ 1d2:	c0 0d       	add	r28, r0
+ 1d4:	11 24       	eor	r1, r1
+	write(0x02, 0);
+ 1d6:	60 e0       	ldi	r22, 0x00	; 0
+ 1d8:	82 e0       	ldi	r24, 0x02	; 2
+ 1da:	0e 94 50 00 	call	0xa0	; 0xa0 <write>
+	while (n--) {
+ 1de:	cc 23       	and	r28, r28
+ 1e0:	31 f0       	breq	.+12     	; 0x1ee <pos_lcd+0x24>
+		write(0x14, 0);
+ 1e2:	60 e0       	ldi	r22, 0x00	; 0
+ 1e4:	84 e1       	ldi	r24, 0x14	; 20
+ 1e6:	0e 94 50 00 	call	0xa0	; 0xa0 <write>
+ 1ea:	c1 50       	subi	r28, 0x01	; 1
+void
+pos_lcd(unsigned char r, unsigned char c)
+{
+	unsigned char n = r * 40 + c;
+	write(0x02, 0);
+	while (n--) {
+ 1ec:	d1 f7       	brne	.-12     	; 0x1e2 <pos_lcd+0x18>
+		write(0x14, 0);
+	}
+}
+ 1ee:	cf 91       	pop	r28
+ 1f0:	08 95       	ret
+
+000001f2 <puts_lcd2>:
+	}
+}
+
+void
+puts_lcd2(const char *s)
+{
+ 1f2:	cf 93       	push	r28
+ 1f4:	df 93       	push	r29
+	char c;
+	while ((c = *(s++)) != 0) {
+ 1f6:	ec 01       	movw	r28, r24
+ 1f8:	21 96       	adiw	r28, 0x01	; 1
+ 1fa:	fc 01       	movw	r30, r24
+ 1fc:	80 81       	ld	r24, Z
+ 1fe:	88 23       	and	r24, r24
+ 200:	31 f0       	breq	.+12     	; 0x20e <puts_lcd2+0x1c>
+		write(c, 1);
+ 202:	61 e0       	ldi	r22, 0x01	; 1
+ 204:	0e 94 50 00 	call	0xa0	; 0xa0 <write>
+
+void
+puts_lcd2(const char *s)
+{
+	char c;
+	while ((c = *(s++)) != 0) {
+ 208:	89 91       	ld	r24, Y+
+ 20a:	81 11       	cpse	r24, r1
+ 20c:	fa cf       	rjmp	.-12     	; 0x202 <puts_lcd2+0x10>
+		write(c, 1);
+	}
+ 20e:	df 91       	pop	r29
+ 210:	cf 91       	pop	r28
+ 212:	08 95       	ret
+
+00000214 <get_value>:
+
+#include <util/delay.h>
+
+char get_value(unsigned char key)
+{
+ 214:	cf 93       	push	r28
+ 216:	df 93       	push	r29
+ 218:	cd b7       	in	r28, 0x3d	; 61
+ 21a:	de b7       	in	r29, 0x3e	; 62
+ 21c:	60 97       	sbiw	r28, 0x10	; 16
+ 21e:	0f b6       	in	r0, 0x3f	; 63
+ 220:	f8 94       	cli
+ 222:	de bf       	out	0x3e, r29	; 62
+ 224:	0f be       	out	0x3f, r0	; 63
+ 226:	cd bf       	out	0x3d, r28	; 61
+	const char keypad[16] = {
+ 228:	90 e1       	ldi	r25, 0x10	; 16
+ 22a:	e4 e7       	ldi	r30, 0x74	; 116
+ 22c:	f1 e0       	ldi	r31, 0x01	; 1
+ 22e:	de 01       	movw	r26, r28
+ 230:	11 96       	adiw	r26, 0x01	; 1
+ 232:	01 90       	ld	r0, Z+
+ 234:	0d 92       	st	X+, r0
+ 236:	9a 95       	dec	r25
+ 238:	e1 f7       	brne	.-8      	; 0x232 <get_value+0x1e>
+	'7','8','9','C',
+	'*','0','#','D'};
+	
+	int index = (int) key;
+	
+	return keypad[index];	
+ 23a:	e1 e0       	ldi	r30, 0x01	; 1
+ 23c:	f0 e0       	ldi	r31, 0x00	; 0
+ 23e:	ec 0f       	add	r30, r28
+ 240:	fd 1f       	adc	r31, r29
+ 242:	e8 0f       	add	r30, r24
+ 244:	f1 1d       	adc	r31, r1
+}
+ 246:	80 81       	ld	r24, Z
+ 248:	60 96       	adiw	r28, 0x10	; 16
+ 24a:	0f b6       	in	r0, 0x3f	; 63
+ 24c:	f8 94       	cli
+ 24e:	de bf       	out	0x3e, r29	; 62
+ 250:	0f be       	out	0x3f, r0	; 63
+ 252:	cd bf       	out	0x3d, r28	; 61
+ 254:	df 91       	pop	r29
+ 256:	cf 91       	pop	r28
+ 258:	08 95       	ret
+
+0000025a <pressed>:
+	return  0xff;
+}
+
+unsigned char pressed(unsigned r, unsigned c)
+{
+	DDRC = 0x0f;
+ 25a:	9f e0       	ldi	r25, 0x0F	; 15
+ 25c:	94 bb       	out	0x14, r25	; 20
+	PORTC = 0xff;
+ 25e:	9f ef       	ldi	r25, 0xFF	; 255
+ 260:	95 bb       	out	0x15, r25	; 21
+	
+	CLR_BIT(PORTC,r);
+ 262:	95 b3       	in	r25, 0x15	; 21
+ 264:	21 e0       	ldi	r18, 0x01	; 1
+ 266:	30 e0       	ldi	r19, 0x00	; 0
+ 268:	02 c0       	rjmp	.+4      	; 0x26e <pressed+0x14>
+ 26a:	22 0f       	add	r18, r18
+ 26c:	33 1f       	adc	r19, r19
+ 26e:	8a 95       	dec	r24
+ 270:	e2 f7       	brpl	.-8      	; 0x26a <pressed+0x10>
+ 272:	20 95       	com	r18
+ 274:	29 23       	and	r18, r25
+ 276:	25 bb       	out	0x15, r18	; 21
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 278:	8f ec       	ldi	r24, 0xCF	; 207
+ 27a:	97 e0       	ldi	r25, 0x07	; 7
+ 27c:	01 97       	sbiw	r24, 0x01	; 1
+ 27e:	f1 f7       	brne	.-4      	; 0x27c <pressed+0x22>
+ 280:	00 c0       	rjmp	.+0      	; 0x282 <pressed+0x28>
+ 282:	00 00       	nop
+	
+	_delay_ms(1);
+	
+	if(!GET_BIT(PINC,c+4))
+ 284:	83 b3       	in	r24, 0x13	; 19
+ 286:	90 e0       	ldi	r25, 0x00	; 0
+ 288:	6c 5f       	subi	r22, 0xFC	; 252
+ 28a:	7f 4f       	sbci	r23, 0xFF	; 255
+ 28c:	02 c0       	rjmp	.+4      	; 0x292 <pressed+0x38>
+ 28e:	95 95       	asr	r25
+ 290:	87 95       	ror	r24
+ 292:	6a 95       	dec	r22
+ 294:	e2 f7       	brpl	.-8      	; 0x28e <pressed+0x34>
+ 296:	21 e0       	ldi	r18, 0x01	; 1
+ 298:	82 27       	eor	r24, r18
+		return 1;
+	}
+	
+	return 0;
+	
+ 29a:	81 70       	andi	r24, 0x01	; 1
+ 29c:	08 95       	ret
+
+0000029e <get_key>:
+	return keypad[index];	
+}
+
+
+unsigned char get_key()
+{
+ 29e:	cf 92       	push	r12
+ 2a0:	df 92       	push	r13
+ 2a2:	ef 92       	push	r14
+ 2a4:	ff 92       	push	r15
+ 2a6:	0f 93       	push	r16
+ 2a8:	1f 93       	push	r17
+ 2aa:	cf 93       	push	r28
+ 2ac:	df 93       	push	r29
+ 2ae:	00 e0       	ldi	r16, 0x00	; 0
+ 2b0:	10 e0       	ldi	r17, 0x00	; 0
+ 2b2:	c1 2c       	mov	r12, r1
+ 2b4:	d1 2c       	mov	r13, r1
+ 2b6:	14 c0       	rjmp	.+40     	; 0x2e0 <get_key+0x42>
+	for(r = 0; r < 4; r++)
+	{
+		for(c=0; c < 4; ++c)
+		{
+			
+			if(pressed(r,c))
+ 2b8:	be 01       	movw	r22, r28
+ 2ba:	c8 01       	movw	r24, r16
+ 2bc:	0e 94 2d 01 	call	0x25a	; 0x25a <pressed>
+ 2c0:	88 23       	and	r24, r24
+ 2c2:	29 f0       	breq	.+10     	; 0x2ce <get_key+0x30>
+			{
+				
+				return r * 4 + c;
+ 2c4:	8e 2d       	mov	r24, r14
+ 2c6:	88 0f       	add	r24, r24
+ 2c8:	88 0f       	add	r24, r24
+ 2ca:	8c 0f       	add	r24, r28
+ 2cc:	0e c0       	rjmp	.+28     	; 0x2ea <get_key+0x4c>
+ 2ce:	21 96       	adiw	r28, 0x01	; 1
+{
+	unsigned char r,c;
+	
+	for(r = 0; r < 4; r++)
+	{
+		for(c=0; c < 4; ++c)
+ 2d0:	c4 30       	cpi	r28, 0x04	; 4
+ 2d2:	d1 05       	cpc	r29, r1
+ 2d4:	89 f7       	brne	.-30     	; 0x2b8 <get_key+0x1a>
+ 2d6:	0f 5f       	subi	r16, 0xFF	; 255
+ 2d8:	1f 4f       	sbci	r17, 0xFF	; 255
+
+unsigned char get_key()
+{
+	unsigned char r,c;
+	
+	for(r = 0; r < 4; r++)
+ 2da:	04 30       	cpi	r16, 0x04	; 4
+ 2dc:	11 05       	cpc	r17, r1
+ 2de:	21 f0       	breq	.+8      	; 0x2e8 <get_key+0x4a>
+ 2e0:	e0 2e       	mov	r14, r16
+	return keypad[index];	
+}
+
+
+unsigned char get_key()
+{
+ 2e2:	cc 2d       	mov	r28, r12
+ 2e4:	dd 2d       	mov	r29, r13
+ 2e6:	e8 cf       	rjmp	.-48     	; 0x2b8 <get_key+0x1a>
+			}
+		}
+		
+	}	
+	
+	return  0xff;
+ 2e8:	8f ef       	ldi	r24, 0xFF	; 255
+}
+ 2ea:	df 91       	pop	r29
+ 2ec:	cf 91       	pop	r28
+ 2ee:	1f 91       	pop	r17
+ 2f0:	0f 91       	pop	r16
+ 2f2:	ff 90       	pop	r15
+ 2f4:	ef 90       	pop	r14
+ 2f6:	df 90       	pop	r13
+ 2f8:	cf 90       	pop	r12
+ 2fa:	08 95       	ret
+
+000002fc <main>:
+#define B6  350
+#define C7  330
+
+
+int main(void)
+{
+ 2fc:	cf 93       	push	r28
+ 2fe:	df 93       	push	r29
+ 300:	cd b7       	in	r28, 0x3d	; 61
+ 302:	de b7       	in	r29, 0x3e	; 62
+ 304:	c6 59       	subi	r28, 0x96	; 150
+ 306:	d1 09       	sbc	r29, r1
+ 308:	0f b6       	in	r0, 0x3f	; 63
+ 30a:	f8 94       	cli
+ 30c:	de bf       	out	0x3e, r29	; 62
+ 30e:	0f be       	out	0x3f, r0	; 63
+ 310:	cd bf       	out	0x3d, r28	; 61
+    /* Replace with your application code */
+	ini_lcd();
+ 312:	0e 94 b8 00 	call	0x170	; 0x170 <ini_lcd>
+	char buffer2[50];
+    
+	while (1) 
+	{
+		pos_lcd(0,0);
+		strcpy(buffer, "Pick #1 or #4 to");
+ 316:	01 e1       	ldi	r16, 0x11	; 17
+		puts_lcd2(buffer);
+		pos_lcd(1,0);
+		strcpy(buffer2,"Pick A Song");
+ 318:	1c e0       	ldi	r17, 0x0C	; 12
+		
+		else if(key == '4')
+		{
+			clr_lcd();
+			pos_lcd(0,0);
+			strcpy(status,"Playing Song 2");
+ 31a:	0f 2e       	mov	r0, r31
+ 31c:	ff e0       	ldi	r31, 0x0F	; 15
+ 31e:	ff 2e       	mov	r15, r31
+ 320:	f0 2d       	mov	r31, r0
+	char buffer[50];
+	char buffer2[50];
+    
+	while (1) 
+	{
+		pos_lcd(0,0);
+ 322:	60 e0       	ldi	r22, 0x00	; 0
+ 324:	80 e0       	ldi	r24, 0x00	; 0
+ 326:	0e 94 e5 00 	call	0x1ca	; 0x1ca <pos_lcd>
+		strcpy(buffer, "Pick #1 or #4 to");
+ 32a:	e4 e8       	ldi	r30, 0x84	; 132
+ 32c:	f1 e0       	ldi	r31, 0x01	; 1
+ 32e:	de 01       	movw	r26, r28
+ 330:	d3 96       	adiw	r26, 0x33	; 51
+ 332:	80 2f       	mov	r24, r16
+ 334:	01 90       	ld	r0, Z+
+ 336:	0d 92       	st	X+, r0
+ 338:	8a 95       	dec	r24
+ 33a:	e1 f7       	brne	.-8      	; 0x334 <main+0x38>
+		puts_lcd2(buffer);
+ 33c:	ce 01       	movw	r24, r28
+ 33e:	c3 96       	adiw	r24, 0x33	; 51
+ 340:	0e 94 f9 00 	call	0x1f2	; 0x1f2 <puts_lcd2>
+		pos_lcd(1,0);
+ 344:	60 e0       	ldi	r22, 0x00	; 0
+ 346:	81 e0       	ldi	r24, 0x01	; 1
+ 348:	0e 94 e5 00 	call	0x1ca	; 0x1ca <pos_lcd>
+		strcpy(buffer2,"Pick A Song");
+ 34c:	e5 e9       	ldi	r30, 0x95	; 149
+ 34e:	f1 e0       	ldi	r31, 0x01	; 1
+ 350:	de 01       	movw	r26, r28
+ 352:	ab 59       	subi	r26, 0x9B	; 155
+ 354:	bf 4f       	sbci	r27, 0xFF	; 255
+ 356:	81 2f       	mov	r24, r17
+ 358:	01 90       	ld	r0, Z+
+ 35a:	0d 92       	st	X+, r0
+ 35c:	8a 95       	dec	r24
+ 35e:	e1 f7       	brne	.-8      	; 0x358 <main+0x5c>
+		puts_lcd2(buffer2);
+ 360:	ce 01       	movw	r24, r28
+ 362:	8b 59       	subi	r24, 0x9B	; 155
+ 364:	9f 4f       	sbci	r25, 0xFF	; 255
+ 366:	0e 94 f9 00 	call	0x1f2	; 0x1f2 <puts_lcd2>
+		
+		
+		char key = get_value(get_key());
+ 36a:	0e 94 4f 01 	call	0x29e	; 0x29e <get_key>
+ 36e:	0e 94 0a 01 	call	0x214	; 0x214 <get_value>
+ 372:	2f ef       	ldi	r18, 0xFF	; 255
+ 374:	34 e3       	ldi	r19, 0x34	; 52
+ 376:	9c e0       	ldi	r25, 0x0C	; 12
+ 378:	21 50       	subi	r18, 0x01	; 1
+ 37a:	30 40       	sbci	r19, 0x00	; 0
+ 37c:	90 40       	sbci	r25, 0x00	; 0
+ 37e:	e1 f7       	brne	.-8      	; 0x378 <main+0x7c>
+ 380:	00 c0       	rjmp	.+0      	; 0x382 <main+0x86>
+ 382:	00 00       	nop
+		_delay_ms(500);
+		
+		if(key == '1')
+ 384:	81 33       	cpi	r24, 0x31	; 49
+ 386:	59 f5       	brne	.+86     	; 0x3de <main+0xe2>
+		{
+			clr_lcd();
+ 388:	0e 94 e0 00 	call	0x1c0	; 0x1c0 <clr_lcd>
+			pos_lcd(0,0);
+ 38c:	60 e0       	ldi	r22, 0x00	; 0
+ 38e:	80 e0       	ldi	r24, 0x00	; 0
+ 390:	0e 94 e5 00 	call	0x1ca	; 0x1ca <pos_lcd>
+			strcpy(status,"Playing Song 1");
+ 394:	e1 ea       	ldi	r30, 0xA1	; 161
+ 396:	f1 e0       	ldi	r31, 0x01	; 1
+ 398:	de 01       	movw	r26, r28
+ 39a:	11 96       	adiw	r26, 0x01	; 1
+ 39c:	8f 2d       	mov	r24, r15
+ 39e:	01 90       	ld	r0, Z+
+ 3a0:	0d 92       	st	X+, r0
+ 3a2:	8a 95       	dec	r24
+ 3a4:	e1 f7       	brne	.-8      	; 0x39e <main+0xa2>
+			puts_lcd2(status);
+ 3a6:	ce 01       	movw	r24, r28
+ 3a8:	01 96       	adiw	r24, 0x01	; 1
+ 3aa:	0e 94 f9 00 	call	0x1f2	; 0x1f2 <puts_lcd2>
+			strcpy(status,"Random Song");
+ 3ae:	e0 eb       	ldi	r30, 0xB0	; 176
+ 3b0:	f1 e0       	ldi	r31, 0x01	; 1
+ 3b2:	de 01       	movw	r26, r28
+ 3b4:	11 96       	adiw	r26, 0x01	; 1
+ 3b6:	81 2f       	mov	r24, r17
+ 3b8:	01 90       	ld	r0, Z+
+ 3ba:	0d 92       	st	X+, r0
+ 3bc:	8a 95       	dec	r24
+ 3be:	e1 f7       	brne	.-8      	; 0x3b8 <main+0xbc>
+			pos_lcd(1,0);
+ 3c0:	60 e0       	ldi	r22, 0x00	; 0
+ 3c2:	81 e0       	ldi	r24, 0x01	; 1
+ 3c4:	0e 94 e5 00 	call	0x1ca	; 0x1ca <pos_lcd>
+			puts_lcd2(status);
+ 3c8:	ce 01       	movw	r24, r28
+ 3ca:	01 96       	adiw	r24, 0x01	; 1
+ 3cc:	0e 94 f9 00 	call	0x1f2	; 0x1f2 <puts_lcd2>
+			play_music(song1, SIZE);
+ 3d0:	69 e1       	ldi	r22, 0x19	; 25
+ 3d2:	70 e0       	ldi	r23, 0x00	; 0
+ 3d4:	80 e6       	ldi	r24, 0x60	; 96
+ 3d6:	90 e0       	ldi	r25, 0x00	; 0
+ 3d8:	0e 94 93 00 	call	0x126	; 0x126 <play_music>
+ 3dc:	2c c0       	rjmp	.+88     	; 0x436 <main+0x13a>
+		}
+		
+		else if(key == '4')
+ 3de:	84 33       	cpi	r24, 0x34	; 52
+ 3e0:	51 f5       	brne	.+84     	; 0x436 <main+0x13a>
+		{
+			clr_lcd();
+ 3e2:	0e 94 e0 00 	call	0x1c0	; 0x1c0 <clr_lcd>
+			pos_lcd(0,0);
+ 3e6:	60 e0       	ldi	r22, 0x00	; 0
+ 3e8:	80 e0       	ldi	r24, 0x00	; 0
+ 3ea:	0e 94 e5 00 	call	0x1ca	; 0x1ca <pos_lcd>
+			strcpy(status,"Playing Song 2");
+ 3ee:	ec eb       	ldi	r30, 0xBC	; 188
+ 3f0:	f1 e0       	ldi	r31, 0x01	; 1
+ 3f2:	de 01       	movw	r26, r28
+ 3f4:	11 96       	adiw	r26, 0x01	; 1
+ 3f6:	8f 2d       	mov	r24, r15
+ 3f8:	01 90       	ld	r0, Z+
+ 3fa:	0d 92       	st	X+, r0
+ 3fc:	8a 95       	dec	r24
+ 3fe:	e1 f7       	brne	.-8      	; 0x3f8 <main+0xfc>
+			puts_lcd2(status);
+ 400:	ce 01       	movw	r24, r28
+ 402:	01 96       	adiw	r24, 0x01	; 1
+ 404:	0e 94 f9 00 	call	0x1f2	; 0x1f2 <puts_lcd2>
+			strcpy(status,"Twinkle Little *");
+ 408:	eb ec       	ldi	r30, 0xCB	; 203
+ 40a:	f1 e0       	ldi	r31, 0x01	; 1
+ 40c:	de 01       	movw	r26, r28
+ 40e:	11 96       	adiw	r26, 0x01	; 1
+ 410:	80 2f       	mov	r24, r16
+ 412:	01 90       	ld	r0, Z+
+ 414:	0d 92       	st	X+, r0
+ 416:	8a 95       	dec	r24
+ 418:	e1 f7       	brne	.-8      	; 0x412 <main+0x116>
+			pos_lcd(1,0);
+ 41a:	60 e0       	ldi	r22, 0x00	; 0
+ 41c:	81 e0       	ldi	r24, 0x01	; 1
+ 41e:	0e 94 e5 00 	call	0x1ca	; 0x1ca <pos_lcd>
+			puts_lcd2(status);
+ 422:	ce 01       	movw	r24, r28
+ 424:	01 96       	adiw	r24, 0x01	; 1
+ 426:	0e 94 f9 00 	call	0x1f2	; 0x1f2 <puts_lcd2>
+			
+			play_music(song2, SIZE2);
+ 42a:	6c e2       	ldi	r22, 0x2C	; 44
+ 42c:	70 e0       	ldi	r23, 0x00	; 0
+ 42e:	84 ec       	ldi	r24, 0xC4	; 196
+ 430:	90 e0       	ldi	r25, 0x00	; 0
+ 432:	0e 94 93 00 	call	0x126	; 0x126 <play_music>
+ 436:	2f ef       	ldi	r18, 0xFF	; 255
+ 438:	34 e3       	ldi	r19, 0x34	; 52
+ 43a:	8c e0       	ldi	r24, 0x0C	; 12
+ 43c:	21 50       	subi	r18, 0x01	; 1
+ 43e:	30 40       	sbci	r19, 0x00	; 0
+ 440:	80 40       	sbci	r24, 0x00	; 0
+ 442:	e1 f7       	brne	.-8      	; 0x43c <main+0x140>
+ 444:	00 c0       	rjmp	.+0      	; 0x446 <main+0x14a>
+ 446:	00 00       	nop
+		
+			
+		}
+		_delay_ms(500);
+		clr_lcd();
+ 448:	0e 94 e0 00 	call	0x1c0	; 0x1c0 <clr_lcd>
+		
+	}
+ 44c:	6a cf       	rjmp	.-300    	; 0x322 <main+0x26>
+
+0000044e <_exit>:
+ 44e:	f8 94       	cli
+
+00000450 <__stop_program>:
+ 450:	ff cf       	rjmp	.-2      	; 0x450 <__stop_program>
